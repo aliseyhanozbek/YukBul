@@ -352,18 +352,18 @@ const SoforMesajlar = () => {
   return (
     <DashboardLayout role="sofor">
       <div className="h-[calc(100vh-8rem)] flex flex-col">
-        <div className="mb-4">
+        <div className="mb-4 flex-shrink-0">
           <h1 className="text-2xl md:text-3xl font-bold">Mesajlar</h1>
           <p className="text-muted-foreground">Müşterilerle iletişim kurun</p>
         </div>
 
-        <div className="flex-1 grid lg:grid-cols-3 gap-4 min-h-0">
+        <div className="flex-1 grid lg:grid-cols-3 gap-4 min-h-0 overflow-hidden">
           {/* Conversations List */}
-          <Card className="lg:col-span-1 flex flex-col">
-            <CardHeader className="pb-3">
+          <Card className="lg:col-span-1 flex flex-col h-full min-h-0">
+            <CardHeader className="pb-3 flex-shrink-0">
               <CardTitle className="text-lg">Görüşmeler</CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 overflow-y-auto p-2 space-y-1">
+            <CardContent className="flex-1 overflow-y-auto p-2 space-y-1 min-h-0">
               {conversations.length === 0 ? (
                 <div className="text-center text-muted-foreground py-8">
                   Henüz görüşme yok
@@ -406,10 +406,10 @@ const SoforMesajlar = () => {
           </Card>
 
           {/* Chat Area */}
-          <Card className="lg:col-span-2 flex flex-col">
+          <Card className="lg:col-span-2 flex flex-col h-full min-h-0">
             {selectedConversationData ? (
               <>
-                <CardHeader className="pb-3 border-b">
+                <CardHeader className="pb-3 border-b flex-shrink-0">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
@@ -449,7 +449,7 @@ const SoforMesajlar = () => {
                 </CardHeader>
 
                 {/* Messages */}
-                <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+                <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
                   {messages.length === 0 ? (
                     <div className="text-center text-muted-foreground py-8">
                       Henüz mesaj yok. İlk mesajı siz gönderin.
@@ -484,7 +484,7 @@ const SoforMesajlar = () => {
                 </CardContent>
 
                 {/* Approval Status & Action Buttons */}
-                <div className="px-4 pt-3 pb-2 border-t border-border/50">
+                <div className="px-4 pt-3 pb-2 border-t border-border/50 flex-shrink-0">
                   {bothApproved ? (
                     <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm text-center">
                       ✅ <strong>Anlaşma sağlandı!</strong> İşlem Aktif İşlemler sekmesine taşındı.
@@ -518,7 +518,7 @@ const SoforMesajlar = () => {
                 </div>
 
                 {/* Input */}
-                <div className="p-4 border-t">
+                <div className="p-4 border-t flex-shrink-0">
                   <div className="flex gap-2">
                     <Input
                       placeholder="Mesajınızı yazın..."
