@@ -374,11 +374,11 @@ const MusteriMesajlar = () => {
 
   return (
     <DashboardLayout role="musteri">
-      <div className="h-[calc(100vh-8rem)] lg:h-[calc(100vh-6rem)]">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full">
+      <div className="h-[calc(100vh-8rem)] lg:h-[calc(100vh-6rem)] flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full min-h-0 overflow-hidden">
           {/* Conversations List */}
-          <Card className="lg:col-span-1 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-border">
+          <Card className="lg:col-span-1 flex flex-col overflow-hidden h-full min-h-0">
+            <div className="p-4 border-b border-border flex-shrink-0">
               <h2 className="text-lg font-semibold mb-3">Mesajlar</h2>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -390,7 +390,7 @@ const MusteriMesajlar = () => {
                 />
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto min-h-0">
               {filteredConversations.length === 0 ? (
                 <div className="text-center text-muted-foreground py-8">
                   {searchQuery ? 'Arama sonucu bulunamadı' : 'Henüz görüşme yok'}
@@ -446,11 +446,11 @@ const MusteriMesajlar = () => {
           </Card>
 
           {/* Chat Area */}
-          <Card className="lg:col-span-2 flex flex-col overflow-hidden">
+          <Card className="lg:col-span-2 flex flex-col overflow-hidden h-full min-h-0">
             {selectedConversation ? (
               <>
                 {/* Chat Header */}
-                <div className="p-4 border-b border-border flex items-center justify-between">
+                <div className="p-4 border-b border-border flex items-center justify-between flex-shrink-0">
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -509,7 +509,7 @@ const MusteriMesajlar = () => {
                 </div>
 
                 {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
                   {messages.length === 0 ? (
                     <div className="text-center text-muted-foreground py-8">
                       Henüz mesaj yok. İlk mesajı siz gönderin.
@@ -551,7 +551,7 @@ const MusteriMesajlar = () => {
                 </div>
 
                 {/* Approval Status & Action Buttons */}
-                <div className="px-4 pt-3 pb-2 border-t border-border/50">
+                <div className="px-4 pt-3 pb-2 border-t border-border/50 flex-shrink-0">
                   {bothApproved ? (
                     <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm text-center">
                       ✅ <strong>Anlaşma sağlandı!</strong> İşlem Aktif İşlemler sekmesine taşındı.
@@ -585,7 +585,7 @@ const MusteriMesajlar = () => {
                 </div>
 
                 {/* Message Input */}
-                <div className="p-4 border-t border-border">
+                <div className="p-4 border-t border-border flex-shrink-0">
                   <div className="flex items-center gap-3">
                     <Input
                       placeholder="Mesajınızı yazın..."
