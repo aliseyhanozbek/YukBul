@@ -18,10 +18,3 @@ $$;
 -- Grant execute permission to authenticated users
 GRANT EXECUTE ON FUNCTION increment_listing_views(BIGINT) TO authenticated;
 
-
-
-
-
-
-
-

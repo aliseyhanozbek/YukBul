@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { MapPin, Calendar, Package, Truck, DollarSign, Info } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabaseClient";
+import { createListing } from "@/services/listingService";
 
 const IlanOlustur = () => {
   const navigate = useNavigate();
@@ -98,18 +98,7 @@ const IlanOlustur = () => {
         insertData.arrival_date = formData.arrivalDate; // TEXT - YYYY-MM-DD format string
       }
 
-      const { error } = await supabase
-        .from('listings')
-        .insert(insertData);
-
-      if (error) {
-        console.error('Error creating listing:', error);
-        console.error('Insert data sent:', insertData);
-        toast.error("İlan oluşturulurken bir hata oluştu: " + error.message);
-        setLoading(false);
-        return;
-      }
-
+      await createListing(insertData);
       toast.success("İlan başarıyla oluşturuldu!");
       
       // Navigate to listings page after short delay

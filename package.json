@@ -1,7 +1,8 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "yuk-bul",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Yük Bul - Professional Cargo Transportation Platform",
   "type": "module",
   "scripts": {
     "dev": "vite",
