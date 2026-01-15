@@ -1,200 +1,313 @@
-# Yük Bul - Kargo Taşıma Platformu
+# 🚚 Yük Bul - Cargo Transportation Platform
 
-Müşteriler ve şoförlerin buluştuğu kargo taşıma platformu.
+A modern, full-stack cargo transportation platform that connects customers, drivers, and companies. Built with React, TypeScript, and Supabase (Backend-as-a-Service).
 
-## 🚀 Kurulum ve Çalıştırma
+## 📋 Table of Contents
 
-### Gereksinimler
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Database Setup](#database-setup)
+- [Environment Variables](#environment-variables)
+- [Scripts](#scripts)
+- [Deployment](#deployment)
 
-- Node.js (v18 veya üzeri önerilir)
-- npm veya yarn
-- Supabase hesabı ve projesi
+## 🎯 Overview
 
-### Adım Adım Kurulum
+Yük Bul is a comprehensive cargo transportation platform that enables:
+- **Customers** to find and book cargo transportation services
+- **Drivers** to create listings and manage their shipments
+- **Companies** to manage fleets and track operations
 
-#### 1. Projeyi İndirin
+The platform features real-time messaging, shipment tracking, location sharing, and comprehensive statistics dashboards.
 
-```sh
-# GitHub'dan projeyi klonlayın veya indirin
-git clone <YOUR_GIT_URL>
-cd <YOUR_PROJECT_NAME>
+## ✨ Features
+
+### For Customers
+- Browse available cargo listings
+- Real-time messaging with drivers
+- Track active shipments
+- View shipment history
+- Rate and review drivers
+
+### For Drivers
+- Create and manage cargo listings
+- Receive and manage orders
+- Real-time location sharing
+- Statistics and analytics dashboard
+- Profile management
+
+### For Companies
+- Company profile management
+- Driver fleet management
+- Company-wide statistics
+- Interactive map view
+- Operational insights
+
+## 🛠 Tech Stack
+
+### Frontend
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **React Router** - Client-side routing
+- **TanStack Query** - Data fetching and caching
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - UI component library
+- **Leaflet** - Interactive maps
+- **Recharts** - Data visualization
+
+### Backend & Infrastructure
+- **Supabase** - Backend-as-a-Service (BaaS)
+  - PostgreSQL database
+  - Authentication
+  - Real-time subscriptions
+  - Row Level Security (RLS)
+
+### Development Tools
+- **ESLint** - Code linting
+- **PostCSS** - CSS processing
+- **TypeScript** - Static type checking
+
+## 🏗 Architecture
+
+This project follows a **modern frontend architecture** with **Backend-as-a-Service** pattern:
+
+```
+┌─────────────────────────────────────────┐
+│         Frontend (React + Vite)         │
+│  ┌──────────┐  ┌──────────┐           │
+│  │  Pages   │  │Components│           │
+│  └──────────┘  └──────────┘           │
+│  ┌──────────┐  ┌──────────┐           │
+│  │ Contexts │  │  Hooks   │           │
+│  └──────────┘  └──────────┘           │
+│  ┌──────────────────────────┐          │
+│  │   Supabase Client (SDK)  │          │
+│  └──────────────────────────┘          │
+└─────────────────────────────────────────┘
+              │
+              ▼
+┌─────────────────────────────────────────┐
+│      Supabase (Backend-as-a-Service)    │
+│  ┌──────────┐  ┌──────────┐           │
+│  │PostgreSQL│  │   Auth   │           │
+│  │ Database │  │  Service │           │
+│  └──────────┘  └──────────┘           │
+│  ┌──────────┐  ┌──────────┐           │
+│  │  RLS     │  │ Real-time│           │
+│  │ Policies │  │  Subscriptions       │
+│  └──────────┘  └──────────┘           │
+└─────────────────────────────────────────┘
 ```
 
-#### 2. Bağımlılıkları Yükleyin
+### Key Architectural Decisions
 
-```sh
-# Tüm paketleri yükleyin (Leaflet ve diğer tüm bağımlılıklar otomatik yüklenecek)
-npm install
-```
+1. **BaaS Pattern**: Using Supabase eliminates the need for a separate backend server, reducing complexity and infrastructure costs.
+2. **Component-Based Architecture**: Modular React components with clear separation of concerns.
+3. **Type Safety**: Full TypeScript implementation for better developer experience and fewer runtime errors.
+4. **State Management**: React Context API for global state, TanStack Query for server state.
+5. **Routing**: Client-side routing with React Router for SPA experience.
 
-**Not:** Leaflet paketleri (`leaflet`, `react-leaflet`, `@types/leaflet`) zaten `package.json` dosyasında tanımlıdır ve `npm install` komutu ile otomatik olarak yüklenecektir. Ayrıca kurmanıza gerek yoktur.
+## 🚀 Getting Started
 
-#### 3. Environment Variables (Çevre Değişkenleri) Ayarlayın ⚠️ **ÇOK ÖNEMLİ!**
+### Prerequisites
 
-**NEDEN GEREKLİ?** `.env.local` dosyası güvenlik nedeniyle GitHub'a yüklenmez. Bu yüzden her yeni kurulumda bu dosyayı manuel oluşturmanız gerekir.
+- **Node.js** (v18 or higher recommended)
+- **npm** or **yarn**
+- **Supabase account** and project
 
-**Proje Supabase kullanmaktadır. Environment variables ayarlamanız gerekmektedir:**
+### Installation
 
-**Yöntem 1: .env.example dosyası varsa (önerilen)**
-1. Proje kök dizininde `.env.example` dosyasını `.env.local` olarak kopyalayın:
-   ```sh
-   # Windows (PowerShell)
-   Copy-Item .env.example .env.local
-   
-   # Mac/Linux
-   cp .env.example .env.local
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd school_project
    ```
 
-**Yöntem 2: Manuel oluşturma**
-1. Proje kök dizininde `.env.local` adında yeni bir dosya oluşturun (Notepad, VS Code, vb.)
-2. Dosyaya şu içeriği ekleyin:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env.local` file in the root directory:
    ```env
    VITE_SUPABASE_URL=https://your-project-id.supabase.co
    VITE_SUPABASE_ANON_KEY=your-anon-key-here
    ```
+   
+   **Important**: 
+   - Do not add quotes around values
+   - No trailing spaces
+   - File must be named exactly `.env.local`
+   - Get your credentials from [Supabase Dashboard](https://app.supabase.com) → Settings → API
 
-**ÖNEMLİ KURALLAR:**
-- ✅ Değerlerin etrafında **TIRNAK İŞARETİ OLMAMALI**
-- ✅ Satır sonunda **BOŞLUK OLMAMALI**
-- ✅ Dosya adı tam olarak **`.env.local`** olmalı (`.env.local.txt` değil!)
-- ✅ Dosya proje **kök dizininde** olmalı (package.json ile aynı yerde)
+4. **Set up the database**
+   
+   See [Database Setup](#database-setup) section below.
 
-**Supabase bilgilerinizi nereden bulabilirsiniz?**
-1. [Supabase Dashboard](https://app.supabase.com)'a giriş yapın
-2. Projenizi seçin
-3. **Settings** > **API** bölümüne gidin
-4. **Project URL** değerini kopyalayın → `VITE_SUPABASE_URL` olarak kullanın
-5. **anon public** key'i kopyalayın → `VITE_SUPABASE_ANON_KEY` olarak kullanın
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-**Örnek .env.local dosyası:**
-```env
-VITE_SUPABASE_URL=https://abcdefghijklmnop.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiY2RlZmdoaWprbG1ub3AiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY0NTIzNDU2NywiZXhwIjoxOTYwODEwNTY3fQ.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+6. **Open your browser**
+   
+   Navigate to `http://localhost:8080`
+
+## 📁 Project Structure
+
+```
+school_project/
+├── database/
+│   ├── schema.sql              # Base database schema
+│   └── migrations/             # Database migration scripts
+│       ├── 001_uuid_fix.sql
+│       ├── 002_increment_views_rpc.sql
+│       ├── 003_company_feature.sql
+│       └── ...
+│       └── README.md           # Migration guide
+│
+├── public/                     # Static assets
+│   ├── favicon.ico
+│   └── robots.txt
+│
+├── src/
+│   ├── components/             # Reusable UI components
+│   │   ├── ui/                 # shadcn/ui components
+│   │   ├── Navbar.tsx
+│   │   ├── Footer.tsx
+│   │   └── ...
+│   │
+│   ├── contexts/               # React Context providers
+│   │   └── AuthContext.tsx
+│   │
+│   ├── hooks/                  # Custom React hooks
+│   │   ├── useUserProfile.ts
+│   │   └── ...
+│   │
+│   ├── lib/                    # Utility libraries
+│   │   ├── supabaseClient.ts   # Supabase client configuration
+│   │   └── utils.ts            # Helper functions
+│   │
+│   ├── pages/                   # Page components
+│   │   ├── Index.tsx           # Landing page
+│   │   ├── Giris.tsx           # Login
+│   │   ├── Kayit.tsx           # Registration
+│   │   ├── musteri/            # Customer pages
+│   │   ├── sofor/              # Driver pages
+│   │   └── sirket/             # Company pages
+│   │
+│   ├── utils/                   # Utility functions
+│   │   ├── conversationUtils.ts
+│   │   └── storageCleanup.ts
+│   │
+│   ├── App.tsx                  # Main app component
+│   ├── main.tsx                 # Application entry point
+│   └── index.css                # Global styles
+│
+├── .env.local                   # Environment variables (not in git)
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
 ```
 
-#### 4. Development Server'ı Başlatın
+## 🗄 Database Setup
 
-```sh
-npm run dev
-```
+### Initial Setup
 
-#### 5. Tarayıcıda Açın
+1. **Create Supabase Project**
+   - Go to [Supabase Dashboard](https://app.supabase.com)
+   - Create a new project
+   - Wait for the project to be fully provisioned
 
-Terminal'de şu mesajı göreceksiniz:
-```
-  VITE v5.x.x  ready in xxx ms
+2. **Run Base Schema**
+   - Open Supabase SQL Editor
+   - Copy and paste contents of `database/schema.sql`
+   - Execute the script
 
-  ➜  Local:   http://localhost:8080/
-  ➜  Network: use --host to expose
-```
+3. **Run Migrations**
+   - Run migrations in numerical order (001, 002, 003, etc.)
+   - See `database/migrations/README.md` for detailed instructions
+   - Each migration file should be executed separately
 
-Tarayıcınızda **http://localhost:8080** adresine gidin.
+### Migration Order
 
-## ⚠️ Önemli Notlar
+1. `001_uuid_fix.sql` - Converts user ID columns to UUID
+2. `002_increment_views_rpc.sql` - Creates RPC function for views
+3. `003_company_feature.sql` - Adds company support
+4. `004_add_separate_unread_counts.sql` - Separate unread counts
+5. `005_add_price_columns.sql` - Price columns for conversations
+6. `006_add_arrival_date.sql` - Arrival date for listings
+7. `007_add_approval_columns.sql` - Approval columns for conversations
 
-### Port 8080 Kullanımı
+## 🔐 Environment Variables
 
-- Proje varsayılan olarak **port 8080**'de çalışır
-- Eğer port 8080 kullanımda ise, Vite otomatik olarak bir sonraki boş portu kullanacaktır
-- Port değişikliği yapmak isterseniz `vite.config.ts` dosyasındaki `port: 8080` değerini değiştirebilirsiniz
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `VITE_SUPABASE_URL` | Your Supabase project URL | Yes |
+| `VITE_SUPABASE_ANON_KEY` | Your Supabase anonymous key | Yes |
 
-### Environment Variables Kontrolü ⚠️ **KRİTİK!**
+**Security Note**: Never commit `.env.local` to version control. It's already in `.gitignore`.
 
-- `.env.local` dosyası **mutlaka** oluşturulmalıdır - **olmadan proje çalışmaz!**
-- Supabase URL ve Key bilgileri olmadan uygulama başlatıldığında hata verecektir
-- `.env.local` dosyası `.gitignore`'da olduğu için GitHub'a yüklenmez (güvenlik için)
-- **Her yeni kurulumda bu dosyayı tekrar oluşturmanız gerekir**
-- GitHub'dan indirdikten sonra `.env.local` dosyası olmayacaktır - siz oluşturmalısınız!
+## 📜 Scripts
 
-### Veritabanı Kurulumu
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server (port 8080) |
+| `npm run build` | Build for production |
+| `npm run build:dev` | Build in development mode |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
 
-- Supabase projenizde veritabanı şemasını oluşturmanız gerekmektedir
-- `supabase_schema.sql` dosyasını Supabase SQL Editor'de çalıştırın
-- Migration dosyalarını (`migration_*.sql`) sırasıyla çalıştırın (gerekirse)
+## 🚢 Deployment
 
-### Sorun Giderme
+### Recommended Platforms
 
-**Port zaten kullanımda hatası:**
-```sh
-# Port 8080'i kullanan işlemi bulun ve kapatın
-# Windows
-netstat -ano | findstr :8080
-taskkill /PID <PID> /F
+- **Vercel** - Recommended for React apps
+- **Netlify** - Great for static sites
+- **Supabase Hosting** - Integrated with Supabase
 
-# Mac/Linux
-lsof -ti:8080 | xargs kill
-```
+### Deployment Steps
 
-**Environment variables hatası:**
-- `.env.local` dosyasının proje kök dizininde olduğundan emin olun
-- Dosya adının tam olarak `.env.local` olduğunu kontrol edin (`.env.local.txt` değil)
-- Supabase bilgilerinin doğru olduğundan emin olun
+1. **Build the project**
+   ```bash
+   npm run build
+   ```
 
-**Bağımlılık hataları:**
-```sh
-# node_modules'ü silip yeniden yükleyin
-rm -rf node_modules package-lock.json
-npm install
-```
+2. **Configure environment variables**
+   - Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in your hosting platform's environment variables
 
-## 📦 Kullanılan Teknolojiler
+3. **Deploy**
+   - Upload the `dist` folder to your hosting platform
+   - Or connect your Git repository for automatic deployments
 
-- **Vite** - Build tool ve dev server
-- **React** - UI framework
-- **TypeScript** - Type safety
-- **Supabase** - Backend ve veritabanı
-- **React Router** - Routing
-- **Leaflet** - Harita görselleştirme
-- **Tailwind CSS** - Styling
-- **shadcn/ui** - UI component library
+### Environment Variables in Production
 
-## 📝 Scripts
+Make sure to set the same environment variables in your hosting platform's dashboard.
 
-- `npm run dev` - Development server'ı başlatır (port 8080)
-- `npm run build` - Production build oluşturur
-- `npm run preview` - Production build'i önizler
-- `npm run lint` - ESLint ile kod kontrolü yapar
+## 🤝 Contributing
 
-## 🔧 Geliştirme
+This is a school project. For contributions, please follow standard Git workflow:
+1. Create a feature branch
+2. Make your changes
+3. Submit a pull request
 
-Projeyi yerel olarak geliştirmek için:
+## 📝 License
 
-1. `.env.local` dosyasını oluşturduğunuzdan emin olun
-2. `npm run dev` ile development server'ı başlatın
-3. Kod değişiklikleri otomatik olarak hot-reload ile yansıyacaktır
+This project is part of a school assignment.
 
-**Edit a file directly in GitHub**
+## 👤 Author
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Developed as part of a school project.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Built with ❤️ using React, TypeScript, and Supabase**

@@ -11,7 +11,9 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { getActiveOrders } from "@/services/orderService";
+import { getUserById } from "@/services/userService";
+import { getReviewsByDriverId } from "@/services/reviewService";
 
 const MusteriPanel = () => {
   const { user } = useAuth();
@@ -63,43 +65,25 @@ const MusteriPanel = () => {
 
       try {
         // Fetch the most recent active order (only from orders table - these are already approved by both parties)
-        const { data: ordersData, error: ordersError } = await supabase
-          .from('orders')
-          .select('id, from, to, status, driverId')
-          .eq('customerId', user.id)
-          .in('status', ['Yolda', 'Hazırlanıyor', 'Onay Bekliyor'])
-          .order('createdAt', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        if (ordersError) {
-          console.error('Error fetching active order:', ordersError);
-          setLoadingOrder(false);
-          return;
-        }
-
-        if (ordersData) {
+        const activeOrders = await getActiveOrders(user.id, 'customer');
+        
+        if (activeOrders.length > 0) {
+          const ordersData = activeOrders[0];
+          
           // Fetch driver information
           let driverName = 'Bilinmeyen Şoför';
           let driverRating = 0;
 
           if (ordersData.driverId) {
-            const [driverDataResult, reviewsResult] = await Promise.all([
-              supabase
-                .from('users')
-                .select('name')
-                .eq('id', ordersData.driverId)
-                .maybeSingle(),
-              supabase
-                .from('reviews')
-                .select('rating')
-                .eq('driverId', ordersData.driverId)
+            const [driverData, reviews] = await Promise.all([
+              getUserById(ordersData.driverId),
+              getReviewsByDriverId(ordersData.driverId)
             ]);
 
-            if (!driverDataResult.error && driverDataResult.data) {
-              driverName = driverDataResult.data.name || 'Bilinmeyen Şoför';
-              driverRating = reviewsResult.data && reviewsResult.data.length > 0
-                ? reviewsResult.data.reduce((acc, curr) => acc + curr.rating, 0) / reviewsResult.data.length
+            if (driverData) {
+              driverName = driverData.name || 'Bilinmeyen Şoför';
+              driverRating = reviews.length > 0
+                ? reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length
                 : 0;
             }
           }

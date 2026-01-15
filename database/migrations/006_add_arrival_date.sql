@@ -8,10 +8,3 @@ ALTER TABLE "listings"
 -- Optional: Add a comment to document the column
 COMMENT ON COLUMN "listings"."arrivalDate" IS 'Tahmini varış tarihi (YYYY-MM-DD formatında)';
 
-
-
-
-
-
-
-

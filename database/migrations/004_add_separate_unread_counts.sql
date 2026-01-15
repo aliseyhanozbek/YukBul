@@ -9,9 +9,3 @@ UPDATE "conversations"
 SET "driver_unread_count" = COALESCE("unread", 0)
 WHERE "driver_unread_count" = 0;
 
-
-
-
-
-
-

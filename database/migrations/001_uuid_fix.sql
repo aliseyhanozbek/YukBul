@@ -83,11 +83,3 @@ ALTER TABLE "statistics"
 -- AND column_name IN ('driverId', 'customerId')
 -- ORDER BY table_name, column_name;
 
-
-
-
-
-
-
-
-
